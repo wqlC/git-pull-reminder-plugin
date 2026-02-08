@@ -1,0 +1,33 @@
+<idea-plugin>
+    <id>com.github.zhenyuan.gitpullreminder</id>
+    <name>Git Pull Reminder</name>
+    <version>1.0.0</version>
+    <vendor email="zhenyuan.wql@alibaba-inc.com">贞元</vendor>
+
+    <description><![CDATA[
+        <p>在 Git commit 之前自动检查远程仓库是否有未 pull 的提交。</p>
+        <ul>
+            <li>自动执行 git fetch 获取远程最新状态</li>
+            <li>比较本地分支和远程分支的差异</li>
+            <li>如果远程有新提交，弹出对话框提示用户是否需要先 pull</li>
+        </ul>
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <p>1.0.0 - 初始版本</p>
+        <ul>
+            <li>实现 commit 前检查远程是否有未 pull 的提交</li>
+            <li>支持用户选择是否执行 pull 操作</li>
+        </ul>
+    ]]></change-notes>
+
+    <idea-version since-build="233"/>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>Git4Idea</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <checkinHandlerFactory
+                implementation="com.github.zhenyuan.gitpullreminder.GitPullReminderCheckinHandlerFactory"/>
+    </extensions>
+</idea-plugin>
