@@ -5,19 +5,23 @@
     <vendor email="zhenyuan.wql@alibaba-inc.com">贞元</vendor>
 
     <description><![CDATA[
-        <p>在 Git commit 之前自动检查远程仓库是否有未 pull 的提交。</p>
+        <p>A lightweight plugin that reminds you to pull before committing when your branch is behind the remote.</p>
+        <p>Automatically checks for unpulled commits before each Git commit to help you avoid merge conflicts.</p>
+        <h3>Features:</h3>
         <ul>
-            <li>自动执行 git fetch 获取远程最新状态</li>
-            <li>比较本地分支和远程分支的差异</li>
-            <li>如果远程有新提交，弹出对话框提示用户是否需要先 pull</li>
+            <li>Auto-fetch: Automatically executes git fetch to get the latest remote status</li>
+            <li>Smart detection: Compares local branch with remote tracking branch</li>
+            <li>User-friendly dialog: Shows a clear prompt when remote has new commits</li>
+            <li>Flexible options: Pull then commit, commit anyway, or cancel</li>
         </ul>
     ]]></description>
 
     <change-notes><![CDATA[
-        <p>1.0.0 - 初始版本</p>
+        <h3>1.0.0 - Initial Release</h3>
         <ul>
-            <li>实现 commit 前检查远程是否有未 pull 的提交</li>
-            <li>支持用户选择是否执行 pull 操作</li>
+            <li>Check for unpulled commits before each Git commit</li>
+            <li>Auto-fetch remote repository status</li>
+            <li>User can choose to pull, commit anyway, or cancel</li>
         </ul>
     ]]></change-notes>
 
