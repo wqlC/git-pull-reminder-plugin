@@ -1,80 +1,114 @@
 # Git Pull Reminder Plugin
 
-一个 IntelliJ IDEA 插件，在 Git commit 之前自动检查远程仓库是否有未 pull 的提交。
+[![JetBrains IntelliJ Plugins](https://img.shields.io/badge/JetBrains-Plugin-blue?logo=intellij-idea)](https://plugins.jetbrains.com/)
+[![GitHub](https://img.shields.io/github/license/wqlC/git-pull-reminder-plugin)](LICENSE)
+[![GitHub release](https://img.shields.io/github/v/release/wqlC/git-pull-reminder-plugin?include_prereleases)](https://github.com/wqlC/git-pull-reminder-plugin/releases)
 
-## 功能特性
+A lightweight IntelliJ IDEA plugin that reminds you to pull before committing when your branch is behind the remote.
 
-- ✅ 在每次 commit 之前自动执行 `git fetch` 获取远程最新状态
-- ✅ 比较本地分支和远程跟踪分支的差异
-- ✅ 如果远程有新提交，弹出对话框提示用户
-- ✅ 用户可以选择：
-  - **Pull 后再提交**：自动执行 pull 操作，成功后继续提交
-  - **直接提交**：忽略警告，直接提交
-  - **取消**：取消本次提交操作
+一个轻量级的 IntelliJ IDEA 插件，在 Git commit 之前自动检查远程仓库是否有未 pull 的提交。
 
-## 安装方式
+## ✨ Features
 
-### 方式一：从源码构建
+- 🔍 **Auto Fetch**: Automatically executes `git fetch` before each commit to get the latest remote status
+- 📊 **Smart Detection**: Compares local branch with remote tracking branch to detect unpulled commits
+- 💬 **User-Friendly Dialog**: Shows a clear dialog when remote has new commits
+- 🎯 **Flexible Options**:
+  - **Pull then Commit**: Automatically pull and continue with commit
+  - **Commit Anyway**: Ignore the warning and proceed with commit
+  - **Cancel**: Cancel the commit operation
 
-1. 克隆或下载本项目
-2. 使用 IntelliJ IDEA 打开项目
-3. 执行 Gradle 任务构建插件：
-   ```bash
-   ./gradlew buildPlugin
-   ```
-4. 构建完成后，插件文件位于 `build/distributions/git-pull-reminder-plugin-1.0.0.zip`
-5. 在 IntelliJ IDEA 中：
-   - 打开 `Settings/Preferences` → `Plugins`
-   - 点击齿轮图标 → `Install Plugin from Disk...`
-   - 选择构建好的 zip 文件
-   - 重启 IDE
+## 📦 Installation
 
-### 方式二：直接运行调试
+### From JetBrains Marketplace (Recommended)
+
+1. Open IntelliJ IDEA
+2. Go to `Settings/Preferences` → `Plugins` → `Marketplace`
+3. Search for "Git Pull Reminder"
+4. Click `Install` and restart IDE
+
+### From Disk
+
+1. Download the latest release from [GitHub Releases](https://github.com/wqlC/git-pull-reminder-plugin/releases)
+2. In IntelliJ IDEA: `Settings/Preferences` → `Plugins` → ⚙️ → `Install Plugin from Disk...`
+3. Select the downloaded `.zip` file
+4. Restart IDE
+
+### Build from Source
+
+```bash
+git clone https://github.com/wqlC/git-pull-reminder-plugin.git
+cd git-pull-reminder-plugin
+./gradlew buildPlugin
+```
+
+The plugin file will be at `build/distributions/git-pull-reminder-plugin-*.zip`
+
+## 🚀 Usage
+
+After installation, the plugin works automatically:
+
+1. When you commit changes in IntelliJ IDEA
+2. Plugin fetches the latest remote status
+3. If remote has new commits, a dialog appears
+4. Choose your preferred action
+
+## 📋 Requirements
+
+- IntelliJ IDEA 2023.3 or later (also works with other JetBrains IDEs)
+- Git plugin enabled
+
+## 🏗️ Project Structure
+
+```
+git-pull-reminder-plugin/
+├── build.gradle.kts                    # Gradle build configuration
+├── settings.gradle.kts                 # Gradle settings
+├── src/main/
+│   ├── java/.../gitpullreminder/
+│   │   ├── GitPullReminderCheckinHandlerFactory.java
+│   │   └── GitPullReminderCheckinHandler.java
+│   └── resources/META-INF/
+│       └── plugin.xml                  # Plugin configuration
+└── gradle/wrapper/
+    └── gradle-wrapper.properties
+```
+
+## 🔧 Development
+
+### Run in Development Mode
 
 ```bash
 ./gradlew runIde
 ```
 
-这将启动一个带有插件的 IntelliJ IDEA 实例用于测试。
+### Build Plugin
 
-## 使用说明
-
-安装插件后，每次在 IntelliJ IDEA 中执行 Git commit 操作时：
-
-1. 插件会自动执行 `git fetch` 获取远程最新状态
-2. 检查当前分支是否落后于远程跟踪分支
-3. 如果远程有新提交，会弹出提示对话框
-4. 根据你的选择执行相应操作
-
-## 系统要求
-
-- IntelliJ IDEA 2023.3 或更高版本
-- Git 插件已启用
-
-## 开发说明
-
-### 项目结构
-
-```
-git-pull-reminder-plugin/
-├── build.gradle.kts              # Gradle 构建配置
-├── settings.gradle.kts           # Gradle 设置
-├── src/main/
-│   ├── java/com/github/zhenyuan/gitpullreminder/
-│   │   ├── GitPullReminderCheckinHandlerFactory.java  # 工厂类
-│   │   └── GitPullReminderCheckinHandler.java         # 核心处理逻辑
-│   └── resources/META-INF/
-│       └── plugin.xml            # 插件配置
-└── gradle/wrapper/
-    └── gradle-wrapper.properties # Gradle Wrapper 配置
+```bash
+./gradlew buildPlugin
 ```
 
-### 核心技术
+### Verify Plugin
 
-- 使用 `CheckinHandlerFactory` 扩展点注册提交前检查
-- 使用 `Git4Idea` API 与 Git 交互
-- 使用 `git rev-list --count` 命令计算落后的提交数
+```bash
+./gradlew verifyPlugin
+```
 
-## License
+## 🤝 Contributing
 
-MIT License
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Inspired by [Git Push Reminder](https://github.com/ChrisCarini/git-push-reminder-jetbrains-plugin)
+- Built with [IntelliJ Platform Plugin SDK](https://plugins.jetbrains.com/docs/intellij/welcome.html)
