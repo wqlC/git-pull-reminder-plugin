@@ -33,5 +33,19 @@
     <extensions defaultExtensionNs="com.intellij">
         <checkinHandlerFactory
                 implementation="com.github.zhenyuan.gitpullreminder.GitPullReminderCheckinHandlerFactory"/>
+
+        <applicationService
+                serviceImplementation="com.github.zhenyuan.gitpullreminder.GitPullReminderSettings"/>
+
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.github.zhenyuan.gitpullreminder.GitPullReminderConfigurable"
+                id="com.github.zhenyuan.gitpullreminder.GitPullReminderConfigurable"
+                displayName="Git Pull Reminder"/>
+
+        <notificationGroup id="Git Pull Reminder"
+                           displayType="BALLOON"
+                           bundle="messages.GitPullReminderBundle"
+                           key="notification.group.id"/>
     </extensions>
 </idea-plugin>
