@@ -94,6 +94,92 @@ git-pull-reminder-plugin/
 ./gradlew verifyPlugin
 ```
 
+## 💡 Why Pull Before Commit?
+
+When your local branch is behind the remote, committing without pulling first often leads to:
+
+- **Unnecessary merge commits** that clutter the Git history
+- **Conflict resolution at push time** instead of catching issues early
+- **Diverged branches** that are harder to reconcile later
+
+This plugin catches the "behind remote" situation **before** you commit, giving you a chance to pull first and keep your workflow clean.
+
+## ⚙️ Recommended Git Configuration
+
+For the best experience with this plugin, we recommend configuring Git to use **rebase** instead of merge when pulling:
+
+```bash
+git config --global pull.rebase true
+git config --global rebase.autoStash true
+```
+
+### What does `pull.rebase true` do?
+
+By default, `git pull` = `git fetch` + `git merge`, which creates an extra merge commit:
+
+```
+Remote:  A - B - C
+Local:   A - B - D (your local commit)
+
+After merge:
+A - B - C - M    (M is a merge commit)
+         \  /
+          D
+```
+
+With `pull.rebase true`, Git **replays** your local commits on top of the remote changes, producing a clean linear history:
+
+```
+Remote:  A - B - C
+Local:   A - B - D (your local commit)
+
+After rebase:
+A - B - C - D'   (D is replayed after C, becoming D')
+```
+
+> In essence: "my work is based on the latest code" rather than "I merged with the remote."
+
+### What does `rebase.autoStash true` do?
+
+Without this setting, `git pull --rebase` will **refuse to run** if you have uncommitted changes:
+
+```
+error: cannot pull with rebase: You have unstaged changes.
+```
+
+With `autoStash` enabled, Git automatically handles this for you:
+
+```
+git pull (with both settings enabled)
+    │
+    ├─ 1. autoStash: dirty working tree detected → stash push
+    │
+    ├─ 2. git fetch: pull latest remote commits
+    │
+    ├─ 3. git rebase: replay local commits on top of remote
+    │       ├─ conflict → pause for manual resolution
+    │       └─ no conflict → complete automatically
+    │
+    └─ 4. autoStash: stash pop → restore your uncommitted changes
+```
+
+Under the hood, `git stash` creates two hidden commits (one for the index, one for the working tree) stored under `refs/stash`, and reapplies them after the rebase completes.
+
+### Handling Conflicts
+
+If a conflict occurs during rebase, the `stash pop` step waits until the conflict is resolved:
+
+```bash
+# After resolving conflicts
+git add <conflicted-files>
+git rebase --continue   # completes rebase, then auto stash pop
+
+# Or abort entirely
+git rebase --abort       # reverts to pre-pull state, stash is restored
+```
+
+> **TL;DR**: `pull.rebase` keeps your history linear, `autoStash` saves you from manually stashing uncommitted work — together they make pulling a seamless experience. 🎯
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.

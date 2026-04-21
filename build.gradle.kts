@@ -1,10 +1,10 @@
 plugins {
     id("java")
-    id("org.jetbrains.intellij") version "1.17.2"
+    id("org.jetbrains.intellij") version "1.17.3"
 }
 
 group = "com.github.zhenyuan"
-version = "1.0.0"
+version = "1.0.1"
 
 repositories {
     mavenCentral()
@@ -13,6 +13,9 @@ repositories {
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 intellij {
@@ -24,7 +27,7 @@ intellij {
 tasks {
     patchPluginXml {
         sinceBuild.set("233")
-        untilBuild.set("243.*")
+        untilBuild.set("")
     }
 
     buildSearchableOptions {
