@@ -11,21 +11,20 @@ import org.jetbrains.annotations.PropertyKey;
  *
  * @author 贞元
  */
-public final class GitPullReminderBundle extends DynamicBundle {
+public final class GitPullReminderBundle {
 
     @NonNls
     private static final String BUNDLE = "messages.GitPullReminderBundle";
 
-    private static final GitPullReminderBundle INSTANCE = new GitPullReminderBundle();
+    private static final DynamicBundle DYNAMIC_BUNDLE =
+            new DynamicBundle(GitPullReminderBundle.class, BUNDLE);
 
-    private GitPullReminderBundle() {
-        super(BUNDLE);
-    }
+    private GitPullReminderBundle() {}
 
     @Nls
     @NotNull
     public static String message(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key,
                                   @NotNull Object... params) {
-        return INSTANCE.getMessage(key, params);
+        return DYNAMIC_BUNDLE.getMessage(key, params);
     }
 }
